@@ -39,5 +39,3 @@ You only need:
 
 - Docker
 - Docker Compose
-
-You don't need to install Go or PostgreSQL.
