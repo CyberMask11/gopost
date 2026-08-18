@@ -1,0 +1,38 @@
+services:
+
+  postgres:
+    image: postgres:17
+    container_name: gopost-postgres
+    environment:
+      POSTGRES_USER: graymask
+      POSTGRES_PASSWORD: GRAYMASK
+      POSTGRES_DB: project
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U graymask -d project"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  api:
+    build: .
+    container_name: gopost-api
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: graymask
+      DB_PASSWORD: GRAYMASK
+      DB_NAME: project
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
