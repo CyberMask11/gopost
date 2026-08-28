@@ -22,7 +22,7 @@ func NewPostRepo(db *sql.DB) *PostRepository {
 }
 
 func (r *PostRepository) CreatePost(post models.Post) error {
-	_, err := r.db.Exec("INSERT INTO posts (username, title, contents, userid) VALUES ($1, $2, $3, $4)",
+	_, err := r.db.Exec("INSERT INTO posts (username, title, content, userid) VALUES ($1, $2, $3, $4)",
 		post.Username, post.Title, post.Content, post.Userid)
 
 	if err != nil {

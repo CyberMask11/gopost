@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { api } from '../api.js'
+import { api, setTokens } from '../api.js'
 
 export default function Settings({ user, onLogout }) {
   const [username, setUsername] = useState(user.username)
@@ -31,7 +31,7 @@ export default function Settings({ user, onLogout }) {
 
       if (username.trim() !== user.username || newPass) {
         const res = await api.login({ username: username.trim(), password })
-        localStorage.setItem('gopost_token', res.token)
+        setTokens(res.token, res.refresh_token)
         window.location.reload()
         return
       }

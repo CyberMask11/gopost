@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 	"golang.org/x/time/rate"
 )
 
@@ -73,6 +74,8 @@ func AuthJwt() gin.HandlerFunc {
 			return
 		}
 
+		parsedId, _ := uuid.Parse(id)
+
 		username, ok := claims["username"].(string)
 		if !ok {
 			c.JSON(404, gin.H{"error": "Missing Username."})
@@ -80,7 +83,7 @@ func AuthJwt() gin.HandlerFunc {
 			return
 		}
 
-		c.Set("userid", id)
+		c.Set("userid", parsedId)
 		c.Set("username", username)
 		c.Set("role", role)
 		c.Next()
@@ -88,10 +91,10 @@ func AuthJwt() gin.HandlerFunc {
 }
 
 func RateLimiter() gin.HandlerFunc {
-	limiter := rate.NewLimiter(rate.Limit(10), 10)
+	ratelimiter := rate.NewLimiter(rate.Limit(10), 10)
 
 	return func(c *gin.Context) {
-		if !limiter.Allow() {
+		if !ratelimiter.Allow() {
 			c.JSON(429, gin.H{"error": "Too many request."})
 			c.Abort()
 			return

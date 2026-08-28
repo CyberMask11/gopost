@@ -233,6 +233,107 @@ a:hover {
   text-transform: uppercase;
 }
 
+/* topbar user search */
+.topsearch {
+  position: relative;
+}
+
+.topsearch::before {
+  content: ">";
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--red);
+  font-size: 11px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.topsearch input {
+  width: 160px;
+  background: var(--bg-2);
+  border: 1px solid var(--line-2);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 5px 10px 5px 24px;
+  outline: none;
+  transition: border-color 0.15s, width 0.2s;
+  caret-color: var(--red);
+}
+
+.topsearch input:focus {
+  border-color: var(--red);
+  width: 220px;
+}
+
+.topsearch input::placeholder {
+  color: var(--faint);
+}
+
+.topsearch-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 260px;
+  background: var(--bg-2);
+  border: 1px solid var(--line-2);
+  z-index: 200;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.topsearch-empty {
+  padding: 12px 14px;
+  color: var(--faint);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.topsearch-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.1s;
+}
+
+.topsearch-row:last-child {
+  border-bottom: none;
+}
+
+.topsearch-row:hover {
+  background: var(--bg-3);
+}
+
+.topsearch-icon {
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--red-dark);
+  color: var(--red);
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.topsearch-name {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.topsearch-role {
+  font-size: 9px;
+  color: var(--red);
+  border: 1px solid var(--red-dark);
+  padding: 1px 5px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
 .btn-ghost {
   background: none;
   border: 1px solid var(--line-2);

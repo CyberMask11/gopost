@@ -39,11 +39,11 @@ export default function Auth({ onLogin }) {
     try {
       if (mode === 'login') {
         const res = await api.login({ username: form.username, password: form.password })
-        onLogin(res.token)
+        onLogin(res.token, res.refresh_token)
       } else {
         await api.register({ username: form.username, password: form.password })
         const res = await api.login({ username: form.username, password: form.password })
-        onLogin(res.token)
+        onLogin(res.token, res.refresh_token)
       }
     } catch (err) {
       setError(err.message)

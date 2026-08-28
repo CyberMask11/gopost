@@ -14,9 +14,8 @@ export default function Home({ user }) {
 
   const load = useCallback(async () => {
     try {
-      const res = await api.getPosts()
-      const all = res?.posts || []
-      setPosts(all.filter((p) => p.userid === user.id))
+      const postsRes = await api.getPosts()
+      setPosts((postsRes?.posts || []).filter((p) => p.userid === user.id))
     } catch (err) {
       setError(err.message)
     } finally {
@@ -24,9 +23,7 @@ export default function Home({ user }) {
     }
   }, [user.id])
 
-  useEffect(() => {
-    load()
-  }, [load])
+  useEffect(() => { load() }, [load])
 
   function change(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -47,10 +44,7 @@ export default function Home({ user }) {
 
   async function submit(e) {
     e.preventDefault()
-    if (!form.title.trim()) {
-      setError('Title required.')
-      return
-    }
+    if (!form.title.trim()) { setError('Title required.'); return }
     setBusy(true)
     setError('')
     try {
@@ -121,9 +115,7 @@ export default function Home({ user }) {
               {busy ? 'sending...' : editing ? '>> commit changes' : '>> transmit'}
             </button>
             {editing && (
-              <button type="button" className="btn ghost" onClick={cancelEdit}>
-                abort
-              </button>
+              <button type="button" className="btn ghost" onClick={cancelEdit}>abort</button>
             )}
           </div>
         </form>
